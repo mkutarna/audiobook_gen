@@ -1,0 +1,20 @@
+
+# .coveragec for audiobook_gen
+
+[run]
+# data_file = put a coverage file name here!!!
+
+[report]
+# Regexes for lines to exclude from consideration
+exclude_lines =
+    # Have to re-enable the standard pragma
+    pragma: no cover
+omit = 
+  tests/*
+  notesbooks/*
+
+[html] 
+# directory = put a directory here!!!!
+
+[tool:pytest]
+addopts = --cov=audiobook_gen --cov-report html
