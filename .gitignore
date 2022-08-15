@@ -8,6 +8,7 @@ token
 docs/
 conda/
 tmp/
+notesbooks/outputs/
 
 tags
 *~
