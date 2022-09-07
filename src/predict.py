@@ -3,7 +3,7 @@ def audiobook_gen():
     import torch
     import torchaudio
     from omegaconf import OmegaConf
-    from epub_parser.py import read_ebook
+    from parser.py import read_ebook
 
     torch.hub.download_url_to_file('https://raw.githubusercontent.com/snakers4/silero-models/master/models.yml',
                                 'latest_silero_models.yml',

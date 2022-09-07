@@ -9,6 +9,8 @@ docs/
 conda/
 tmp/
 notebooks/outputs/
+tests/__pycache__
+tests/.pytest_cache
 
 tags
 *~

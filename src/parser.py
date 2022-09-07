@@ -1,3 +1,6 @@
+def read_txt(txt_path):
+    # function to read in txt files here.
+
 def read_ebook(ebook_path):
 
     import ebooklib
