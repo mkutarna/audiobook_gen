@@ -1,13 +1,16 @@
 def read_txt(txt_path):
     # function to read in txt files here.
+    print("Nothing here yet.")
 
-def read_ebook(ebook_path):
-
+def read_epub(ebook_path):
     import ebooklib
     from ebooklib import epub
     from bs4 import BeautifulSoup
     from nltk import tokenize, download
     from textwrap import TextWrapper
+    from stqdm import stqdm
+
+    max_char_len = 150
 
     download('punkt')
     wrapper = TextWrapper(max_char_len, fix_sentence_endings=True)
@@ -18,7 +21,7 @@ def read_ebook(ebook_path):
     ebook_title = ebook_title.lower().replace(' ', '_')
 
     corpus = []
-    for item in list(book.get_items()):
+    for item in stqdm(list(book.get_items())):
         if item.get_type() == ebooklib.ITEM_DOCUMENT:
             input_text = BeautifulSoup(item.get_content(), "html.parser").text
             text_list = []
