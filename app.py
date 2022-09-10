@@ -1,8 +1,7 @@
 import streamlit as st
-import torch
 
 from src.parser import read_epub, read_txt
-from src.predict import audiobook_gen
+from src.predict import audiobook_gen, load_models
 from src.output import assemble_zip
 
 st.title('Audiobook Generation Tool')
@@ -13,15 +12,18 @@ with st.sidebar:
         label = "Upload the target ebook (.epub only)",
         type = ['epub'])
 
-if st.button('Click to run'):
+if st.button('Click to parse inputs'):
     ebook, title = read_epub(ebook_upload)
+    model = load_models()
     st.success('Parsing complete!')
 
+if st.button('Click to generate'):
     st.warning('Silero TTS engine not working - unknown issue.', icon="⚠️")
-    # with st.spinner('Generating audio...'):
-    #     audiobook_gen(ebook, title)
-    # st.success('TTS generation complete!')
+    with st.spinner('Generating audio...'):
+        audiobook_gen(ebook, title, model)
+    st.success('TTS generation complete!')
 
+if st.button('Click to export'):
     with st.spinner('Building zip file...'):
         zip_file = assemble_zip(title)
         title_name = f'{title}.zip'
