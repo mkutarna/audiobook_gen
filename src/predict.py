@@ -1,31 +1,32 @@
-def audiobook_gen(ebook, title):
+def load_models():
     import torch
-    import torchaudio
+    import os   
     from omegaconf import OmegaConf
-    from stqdm import stqdm
 
     torch.hub.download_url_to_file('https://raw.githubusercontent.com/snakers4/silero-models/master/models.yml',
                                 'models/latest_silero_models.yml',
                                 progress=False)
     models = OmegaConf.load('models/latest_silero_models.yml')
 
-    seed = 1337
-    torch.manual_seed(seed)
-    torch.cuda.manual_seed(seed)
-
-    device = 'cuda' if torch.cuda.is_available() else 'cpu'
-
-    sample_rate = 24000
-
     language = 'en'
     model_id = 'v3_en'
-    speaker = 'en_0'
 
     model, example_text = torch.hub.load(repo_or_dir='snakers4/silero-models',
                                         model='silero_tts',
                                         language=language,
                                         speaker=model_id)
+
+    device = 'cuda' if torch.cuda.is_available() else 'cpu'
     model.to(device)  # gpu or cpu
+    return model
+
+def audiobook_gen(ebook, title, model):
+    import torch
+    import torchaudio
+    from stqdm import stqdm
+
+    sample_rate = 24000
+    speaker = 'en_0'
 
     for chapter in stqdm(ebook):
         chapter_index = f'chapter{ebook.index(chapter):03}'
