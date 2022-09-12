@@ -1,20 +1,11 @@
 def load_models():
     import torch
-    import os   
-    from omegaconf import OmegaConf
-
-    torch.hub.download_url_to_file('https://raw.githubusercontent.com/snakers4/silero-models/master/models.yml',
-                                'models/latest_silero_models.yml',
-                                progress=False)
-    models = OmegaConf.load('models/latest_silero_models.yml')
+    from silero import silero_tts
 
     language = 'en'
     model_id = 'v3_en'
-
-    model, example_text = torch.hub.load(repo_or_dir='snakers4/silero-models',
-                                        model='silero_tts',
-                                        language=language,
-                                        speaker=model_id)
+    model, _ = silero_tts(language=language,
+                                speaker=model_id)
 
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     model.to(device)  # gpu or cpu
