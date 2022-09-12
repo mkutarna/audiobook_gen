@@ -1,0 +1,6 @@
+silero
+streamlit
+ebooklib
+bs4
+nltk
+stqdm

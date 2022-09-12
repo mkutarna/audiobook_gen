@@ -19,10 +19,10 @@ def audiobook_gen(ebook, title, model):
     sample_rate = 24000
     speaker = 'en_0'
 
-    for chapter in stqdm(ebook):
+    for chapter in stqdm(ebook, desc="Chapters in ebook:"):
         chapter_index = f'chapter{ebook.index(chapter):03}'
         audio_list = []
-        for sentence in stqdm(chapter):
+        for sentence in stqdm(chapter, desc="Sentences in chapter:"):
             audio = model.apply_tts(text=sentence,
                                     speaker=speaker,
                                     sample_rate=sample_rate)
