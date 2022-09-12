@@ -17,8 +17,8 @@ if st.button('Click to run!'):
     model = load_models()
     st.success('Parsing complete!')
 
- #   with st.spinner('Generating audio...'):
- #       audiobook_gen(ebook, title, model)
+    with st.spinner('Generating audio...'):
+        audiobook_gen(ebook, title, model)
     st.success('TTS generation complete!')
 
     with st.spinner('Building zip file...'):

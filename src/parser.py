@@ -12,7 +12,7 @@ def read_epub(ebook_path):
 
     max_char_len = 150
 
-    download('punkt')
+    download('punkt', quiet=True)
     wrapper = TextWrapper(max_char_len, fix_sentence_endings=True)
 
     book = epub.read_epub(ebook_path)
@@ -21,7 +21,7 @@ def read_epub(ebook_path):
     ebook_title = ebook_title.lower().replace(' ', '_')
 
     corpus = []
-    for item in stqdm(list(book.get_items())):
+    for item in stqdm(list(book.get_items()), desc="Chapters in ebook:"):
         if item.get_type() == ebooklib.ITEM_DOCUMENT:
             input_text = BeautifulSoup(item.get_content(), "html.parser").text
             text_list = []
