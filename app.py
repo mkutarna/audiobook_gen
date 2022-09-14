@@ -5,12 +5,18 @@ from src.predict import audiobook_gen, load_models
 from src.output import assemble_zip
 
 st.title('Audiobook Generation Tool')
-st.markdown("This tool generates audiobook files from an imported ebook file.")
+# st.markdown("This tool generates audiobook files from an imported ebook file.")
 
-with st.sidebar:
-    ebook_upload = st.file_uploader(
-        label = "Upload the target ebook (.epub only)",
-        type = ['epub'])
+# Render the readme as markdown using st.markdown.
+# readme_text = st.markdown(get_file_content_as_string("instructions.md"))
+text_file = open("instructions.md", "r")
+readme_text = text_file.read()
+text_file.close()
+st.markdown(readme_text)
+
+ebook_upload = st.file_uploader(
+    label = "Upload the target ebook (.epub only)",
+    type = ['epub'])
 
 if st.button('Click to run!'):
     ebook, title = read_epub(ebook_upload)
