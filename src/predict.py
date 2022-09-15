@@ -1,13 +1,11 @@
-# from . import config
+from . import config as cf
 import torch
 
 def load_models():
     from silero import silero_tts
 
-    # model, _ = silero_tts(language=config.LANGUAGE,
-    #                             speaker=config.MODEL_ID)
-    model, _ = silero_tts(language='en',
-                                speaker='v3_en')
+    model, _ = silero_tts(language=cf.LANGUAGE,
+                                speaker=cf.MODEL_ID)
 
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     model.to(device)  # gpu or cpu
@@ -21,12 +19,9 @@ def audiobook_gen(ebook, title, model, speaker):
         chapter_index = f'chapter{ebook.index(chapter):03}'
         audio_list = []
         for sentence in stqdm(chapter, desc="Sentences in chapter:"):
-            # audio = model.apply_tts(text=sentence,
-            #                         speaker=speaker,
-            #                         sample_rate=config.SAMPLE_RATE)
             audio = model.apply_tts(text=sentence,
                                     speaker=speaker,
-                                    sample_rate=24000)
+                                    sample_rate=cf.SAMPLE_RATE)
             if len(audio) > 0 and isinstance(audio, torch.Tensor):
                 audio_list.append(audio)
             # else:
@@ -37,8 +32,7 @@ def audiobook_gen(ebook, title, model, speaker):
 
         if len(audio_list) > 0:
             audio_file = torch.cat(audio_list).reshape(1, -1)
-            # torchaudio.save(sample_path, audio_file, config.SAMPLE_RATE)
-            torchaudio.save(sample_path, audio_file, 24000)
+            torchaudio.save(sample_path, audio_file, cf.SAMPLE_RATE)
         # else:
             # use logging instead
             # print(f'Chapter {chapter_index} is empty.')
