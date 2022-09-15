@@ -9,11 +9,12 @@ def read_epub(ebook_path):
     from nltk import tokenize, download
     from textwrap import TextWrapper
     from stqdm import stqdm
-
-    max_char_len = 150
+    # from . import config
 
     download('punkt', quiet=True)
-    wrapper = TextWrapper(max_char_len, fix_sentence_endings=True)
+    # wrapper = TextWrapper(config.MAX_CHAR_LEN, fix_sentence_endings=True)
+    wrapper = TextWrapper(150, fix_sentence_endings=True)
+
 
     book = epub.read_epub(ebook_path)
 
