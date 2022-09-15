@@ -1,5 +1,4 @@
 import streamlit as st
-
 from src.parser import read_epub, read_txt
 from src.predict import audiobook_gen, load_models
 from src.output import assemble_zip
@@ -15,16 +14,19 @@ text_file.close()
 st.markdown(readme_text)
 
 ebook_upload = st.file_uploader(
-    label = "Upload the target ebook (.epub only)",
+    label = "(1) Upload the target ebook (.epub only)",
     type = ['epub'])
 
-if st.button('Click to run!'):
+model = load_models()
+# speaker = st.selectbox('(2) Please select voice:', model.speakers)
+speaker = st.selectbox('(2) Please select voice:', ['en_0', 'en_1', 'en_2'])
+
+if st.button('(3) Click to run!'):
     ebook, title = read_epub(ebook_upload)
-    model = load_models()
     st.success('Parsing complete!')
 
     with st.spinner('Generating audio...'):
-        audiobook_gen(ebook, title, model)
+        audiobook_gen(ebook, title, model, speaker)
     st.success('TTS generation complete!')
 
     with st.spinner('Building zip file...'):
