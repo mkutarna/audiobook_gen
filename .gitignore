@@ -10,7 +10,7 @@ conda/
 tmp/
 notebooks/outputs/
 outputs/
-tests/__pycache__
+tests/__pycache__/
 tests/.pytest_cache
 
 tags
