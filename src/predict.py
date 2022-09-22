@@ -1,8 +1,8 @@
-from . import config as cf
 import logging
 import torch
 import torchaudio
 from stqdm import stqdm
+from . import config as cf
 
 logging.basicConfig(filename='app.log', filemode='w', format='%(name)s - %(levelname)s - %(message)s', level=logging.DEBUG)
 
