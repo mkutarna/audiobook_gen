@@ -1,10 +1,8 @@
 import logging
 import torch
-import torchaudio
 from stqdm import stqdm
 from . import config as cf
-
-logging.basicConfig(filename='app.log', filemode='w', format='%(name)s - %(levelname)s - %(message)s', level=logging.DEBUG)
+from src.output import write_audio
 
 def load_models():
     from silero import silero_tts
@@ -19,7 +17,8 @@ def load_models():
 def epub_gen(ebook, title, model, speaker):
     for chapter in stqdm(ebook, desc="Chapters in ebook:"):
         chapter_index = f'chapter{ebook.index(chapter):03}'
-        predict(chapter, chapter_index, title, model, speaker)
+        audio_list, sample_list = predict(chapter, chapter_index, title, model, speaker)
+        write_audio(audio_list, sample_list)
 
 def predict(text_section, chapter_index, title, model, speaker):
     audio_list = []
@@ -29,15 +28,10 @@ def predict(text_section, chapter_index, title, model, speaker):
                                 sample_rate=cf.SAMPLE_RATE)
         if len(audio) > 0 and isinstance(audio, torch.Tensor):
             audio_list.append(audio)
-            logging.debug(f'Tensor generated for sentence: \n {sentence}')
+            logging.info(f'Tensor generated for sentence: \n {sentence}')
         else:
             logging.info(f'Tensor for sentence is not valid: \n {sentence}')
 
     sample_path = f'outputs/{title}_{chapter_index}.wav'
 
-    if len(audio_list) > 0:
-        audio_file = torch.cat(audio_list).reshape(1, -1)
-        torchaudio.save(sample_path, audio_file, cf.SAMPLE_RATE)
-        logging.debug(f'Chapter {chapter_index} audio generated.')
-    else:
-        logging.info(f'Chapter {chapter_index} is empty.')
+    return audio_list, sample_path

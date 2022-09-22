@@ -1,3 +1,11 @@
+import logging
+
+logging.basicConfig(filename='app.log',
+                    filemode='w',
+                    format='%(name)s - %(levelname)s - %(message)s',
+                    level=logging.INFO,
+                    force=True)
+
 import streamlit as st
 from src.parser import read_epub, read_txt
 from src.predict import epub_gen, load_models
