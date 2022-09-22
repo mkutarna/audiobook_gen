@@ -16,4 +16,4 @@ jobs:
       - name: Push to hub
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
-        run: git push https://mkutarna:$HF_TOKEN@huggingface.co/spaces/mkutarna/audiobook_gen master
+        run: git push --force https://mkutarna:$HF_TOKEN@huggingface.co/spaces/mkutarna/audiobook_gen master
