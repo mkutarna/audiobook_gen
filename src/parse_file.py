@@ -1,4 +1,15 @@
-from . import config as cf
+import re
+
+from pathlib import Path
+from bs4 import BeautifulSoup
+from nltk import tokenize, download
+from textwrap import TextWrapper
+from stqdm import stqdm
+
+import config as cf
+
+download('punkt', quiet=True)
+wrapper = TextWrapper(cf.MAX_CHAR_LEN, fix_sentence_endings=True)
 
 def read_txt(txt_path):
     """Imports .txt file and ouputs corpus of sentences and the document title.
@@ -22,7 +33,31 @@ def read_txt(txt_path):
         Always: function is not implemented yet.
     """
 
-    raise NotImplementedError("Text file parsing not implemented yet!")
+    with open(txt_path) as f:
+        book = f.read()
+    
+    input_text = BeautifulSoup(book, "html.parser").text
+    text_list = []
+    for paragraph in input_text.split('\n'):
+        paragraph = paragraph.replace('—', '-')
+        paragraph = re.sub(r'[^\x00-\x7f]', "", paragraph)
+        sentences = tokenize.sent_tokenize(paragraph)
+        
+        # Wrap sentences to maximum character limit
+        sentence_list = []
+        for sentence in sentences:
+            wrapped_sentences = wrapper.wrap(sentence)
+            sentence_list.append(wrapped_sentences)
+            
+        # Flatten list of list of sentences and append
+        trunc_sentences = [phrase for sublist in sentence_list for phrase in sublist]
+        text_list.append(trunc_sentences)
+    text_list = [[text for sentences in text_list for text in sentences]]
+    
+    # Parse out title from imported file path
+    txt_title = Path(txt_path).stem.lower().replace(' ', '_')
+
+    return text_list, txt_title
 
 def read_epub(ebook_path):
     """Imports .epub file and ouputs corpus of sentences and the document title.
@@ -48,13 +83,6 @@ def read_epub(ebook_path):
 
     import ebooklib
     from ebooklib import epub
-    from bs4 import BeautifulSoup
-    from nltk import tokenize, download
-    from textwrap import TextWrapper
-    from stqdm import stqdm
-
-    download('punkt', quiet=True)
-    wrapper = TextWrapper(cf.MAX_CHAR_LEN, fix_sentence_endings=True)
 
     book = epub.read_epub(ebook_path)
 
@@ -72,6 +100,7 @@ def read_epub(ebook_path):
             for paragraph in input_text.split('\n'):
                 # Parse paragraphs into sentences
                 paragraph = paragraph.replace('—', '-')
+                paragraph = re.sub(r'[^\x00-\x7f]', "", paragraph)
                 sentences = tokenize.sent_tokenize(paragraph)
 
                 # Wrap sentences to maximum character limit
