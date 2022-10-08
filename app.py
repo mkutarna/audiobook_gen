@@ -7,7 +7,7 @@ logging.basicConfig(filename='app.log',
                     force=True)
 
 import streamlit as st
-from src.parser import read_epub, read_txt
+from src.parse_file import read_epub, read_txt
 from src.predict import epub_gen, load_models
 from src.output import assemble_zip
 import src.config as cf
