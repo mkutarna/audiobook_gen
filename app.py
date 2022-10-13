@@ -6,8 +6,9 @@ logging.basicConfig(filename='app.log',
                     level=logging.INFO,
                     force=True)
 
+import pathlib
 import streamlit as st
-from src.parse_file import read_epub, read_txt
+from src.parse_file import read_epub, read_txt, read_pdf, read_html
 from src.predict import epub_gen, load_models
 from src.output import assemble_zip
 import src.config as cf
@@ -20,14 +21,22 @@ text_file.close()
 st.markdown(readme_text)
 
 ebook_upload = st.file_uploader(
-    label = "(1) Upload the target ebook (.epub only)",
-    type = ['epub'])
+    label = "(1) Upload the target ebook ('epub', 'txt', 'html', 'htm', 'pdf')",
+    type = ['epub', 'txt', 'html', 'htm', 'pdf'])
 
 model = load_models()
 speaker = st.selectbox('(2) Please select voice:', cf.SPEAKER_LIST)
 
 if st.button('(3) Click to run!'):
-    ebook, title = read_epub(ebook_upload)
+    file_extension = pathlib.Path('my_file.txt').suffix
+    if file_extension == '.epub':
+        ebook, title = read_epub(ebook_upload)
+    elif file_extension == '.txt':
+        ebook, title = read_txt(ebook_upload)
+    elif file_extension == '.pdf':
+        ebook, title = read_pdf(ebook_upload)
+    elif file_extension == '.htm' or file_extension == '.html':
+        ebook, title = read_html(ebook_upload)
     st.success('Parsing complete!')
 
     with st.spinner('Generating audio...'):

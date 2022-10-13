@@ -6,36 +6,12 @@ from nltk import tokenize, download
 from textwrap import TextWrapper
 from stqdm import stqdm
 
-import config as cf
+import src.config as cf
 
 download('punkt', quiet=True)
 wrapper = TextWrapper(cf.MAX_CHAR_LEN, fix_sentence_endings=True)
 
-def read_txt(txt_path):
-    """Imports .txt file and ouputs corpus of sentences and the document title.
-
-    Parameters
-    ----------
-    txt_path : str
-        The location of the uploaded .txt file
-
-    Returns
-    -------
-    corpus
-        A list of lists of strings that are the parsed sentences
-
-    txt_title
-        The title of the imported .txt file
-
-    Raises
-    ------
-    NotImplementedError
-        Always: function is not implemented yet.
-    """
-
-    with open(txt_path) as f:
-        book = f.read()
-    
+def book_formatting(book):
     input_text = BeautifulSoup(book, "html.parser").text
     text_list = []
     for paragraph in input_text.split('\n'):
@@ -53,42 +29,52 @@ def read_txt(txt_path):
         trunc_sentences = [phrase for sublist in sentence_list for phrase in sublist]
         text_list.append(trunc_sentences)
     text_list = [[text for sentences in text_list for text in sentences]]
+
+    return text_list
+
+def read_txt(file_path):
+    with open(file_path) as f:
+        book = f.read()
+    
+    text_list = book_formatting(book)
     
     # Parse out title from imported file path
-    txt_title = Path(txt_path).stem.lower().replace(' ', '_')
+    file_title = Path(file_path).stem.lower().replace(' ', '_')
 
-    return text_list, txt_title
+    return text_list, file_title
 
-def read_epub(ebook_path):
-    """Imports .epub file and ouputs corpus of sentences and the document title.
+def read_pdf(file_path):
+    from pdfminer.high_level import extract_text
 
-    Parameters
-    ----------
-    ebook_path : str
-        The location of the uploaded .epub file
+    book = extract_text(file_path)
+    
+    text_list = book_formatting(book)
+    
+    # Parse out title from imported file path
+    file_title = Path(file_path).stem.lower().replace(' ', '_')
 
-    Returns
-    -------
-    corpus
-        A list of lists of strings that are the parsed sentences
+    return text_list, file_title
 
-    ebook_title
-        The title of the imported .epub file
+def read_html(file_path):
+    with open(file_path) as f:
+        book = f.read()
+    
+    text_list = book_formatting(book)
+    
+    # Parse out title from imported file path
+    file_title = Path(file_path).stem.lower().replace(' ', '_')
 
-    Raises
-    ------
-    ValueError
-        If file contains no valid text for parsing.
-    """
+    return text_list, file_title
 
+def read_epub(file_path):
     import ebooklib
     from ebooklib import epub
 
-    book = epub.read_epub(ebook_path)
+    book = epub.read_epub(file_path)
 
     # Parse out ebook title from imported book
-    ebook_title = book.get_metadata('DC', 'title')[0][0]
-    ebook_title = ebook_title.lower().replace(' ', '_')
+    file_title = book.get_metadata('DC', 'title')[0][0]
+    file_title = file_title.lower().replace(' ', '_')
 
     # Parse out ebook sections 
     corpus = []
@@ -115,4 +101,4 @@ def read_epub(ebook_path):
             text_list = [text for sentences in text_list for text in sentences]
             corpus.append(text_list)
 
-    return corpus, ebook_title
+    return corpus, file_title
