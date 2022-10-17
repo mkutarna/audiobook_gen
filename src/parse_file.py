@@ -32,14 +32,15 @@ def book_formatting(book):
 
     return text_list
 
-def read_txt(file_path):
-    with open(file_path) as f:
-        book = f.read()
+def read_txt(book):
+    # with open(file_path, "r") as f:
+    #     book = f.read()
     
     text_list = book_formatting(book)
     
     # Parse out title from imported file path
-    file_title = Path(file_path).stem.lower().replace(' ', '_')
+    # file_title = Path(file_path).stem.lower().replace(' ', '_')
+    file_title = "placholder_title"
 
     return text_list, file_title
 
@@ -50,19 +51,21 @@ def read_pdf(file_path):
     
     text_list = book_formatting(book)
     
-    # Parse out title from imported file path
-    file_title = Path(file_path).stem.lower().replace(' ', '_')
+    # # Parse out title from imported file path
+    # file_title = Path(file_path).stem.lower().replace(' ', '_')
+    file_title = "placholder_title"
 
     return text_list, file_title
 
-def read_html(file_path):
-    with open(file_path) as f:
-        book = f.read()
+def read_html(book):
+    # with open(file_path) as f:
+    #     book = f.read()
     
     text_list = book_formatting(book)
     
-    # Parse out title from imported file path
-    file_title = Path(file_path).stem.lower().replace(' ', '_')
+    # # Parse out title from imported file path
+    # file_title = Path(file_path).stem.lower().replace(' ', '_')
+    file_title = "placholder_title"
 
     return text_list, file_title
 

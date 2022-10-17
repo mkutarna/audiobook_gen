@@ -7,6 +7,6 @@ This tool generates custom-voiced audiobook files from an imported ebook file. P
 
 
 ### Notes
-- Currently, only .epub files are accepted for import.
+- Currently, only .epub, .txt, .pdf, .html files are accepted for import.
 - Audiobook generation can take up to 1 hour, depending on the size of the ebook.
 - Generation time also depends on compute available for the app.

@@ -20,7 +20,7 @@ readme_text = text_file.read()
 text_file.close()
 st.markdown(readme_text)
 
-ebook_upload = st.file_uploader(
+uploaded_file = st.file_uploader(
     label = "(1) Upload the target ebook ('epub', 'txt', 'html', 'htm', 'pdf')",
     type = ['epub', 'txt', 'html', 'htm', 'pdf'])
 
@@ -28,15 +28,20 @@ model = load_models()
 speaker = st.selectbox('(2) Please select voice:', cf.SPEAKER_LIST)
 
 if st.button('(3) Click to run!'):
-    file_extension = pathlib.Path('my_file.txt').suffix
-    if file_extension == '.epub':
-        ebook, title = read_epub(ebook_upload)
-    elif file_extension == '.txt':
+    file_extension = uploaded_file.type
+    st.success(file_extension)
+    if file_extension == 'application/epub+zip':
+        ebook, title = read_epub(uploaded_file)
+    elif file_extension == 'text/plain':
+        ebook_upload = uploaded_file.read()
         ebook, title = read_txt(ebook_upload)
-    elif file_extension == '.pdf':
-        ebook, title = read_pdf(ebook_upload)
-    elif file_extension == '.htm' or file_extension == '.html':
+    elif file_extension == 'application/pdf':
+        ebook, title = read_pdf(uploaded_file)
+    elif file_extension == 'text/html' or file_extension == 'text/htm':
+        ebook_upload = uploaded_file.read()
         ebook, title = read_html(ebook_upload)
+    else:
+        st.warning('Invalid file type', icon="⚠️")
     st.success('Parsing complete!')
 
     with st.spinner('Generating audio...'):
