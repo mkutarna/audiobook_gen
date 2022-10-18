@@ -11,7 +11,7 @@ import src.config as cf
 download('punkt', quiet=True)
 wrapper = TextWrapper(cf.MAX_CHAR_LEN, fix_sentence_endings=True)
 
-def preproccess(file):
+def preprocess(file):
     input_text = BeautifulSoup(file, "html.parser").text
     text_list = []
     for paragraph in input_text.split('\n'):
@@ -30,29 +30,18 @@ def preproccess(file):
 
     return text_list
 
-def read_txt(file):
-    text_list = preproccess(file)
-    # file_title = Path(file_path).stem.lower().replace(' ', '_')
-    file_title = "placholder_title"
-
-    return text_list, file_title
-
 def read_pdf(file):
     from pdfminer.high_level import extract_text
 
     text = extract_text(file)
-    text_list = preproccess(text)
-    # file_title = Path(file_path).stem.lower().replace(' ', '_')
-    file_title = "placholder_title"
+    text_list = preprocess(text)
 
-    return text_list, file_title
+    return text_list
 
 def read_html(file):
-    text_list = preproccess(file)
-    # file_title = Path(file_path).stem.lower().replace(' ', '_')
-    file_title = "placholder_title"
+    text_list = preprocess(file)
 
-    return text_list, file_title
+    return text_list
 
 def read_epub(file):
     import ebooklib
@@ -66,7 +55,7 @@ def read_epub(file):
     corpus = []
     for item in stqdm(list(book.get_items()), desc="Chapters in ebook:"):
         if item.get_type() == ebooklib.ITEM_DOCUMENT:
-            text_list = preproccess(item.get_content())
+            text_list = preprocess(item.get_content())
             corpus.append(text_list)
 
     return corpus, file_title

@@ -24,5 +24,7 @@ def assemble_zip(title):
         for file_path in stqdm(directory.iterdir()):
             if pathlib.Path(file_path).suffix == '.wav':
                 archive.write(file_path, arcname=file_path.name)
+                rem_file = pathlib.Path(file_path)
+                rem_file.unlink()
 
     return zip_name
