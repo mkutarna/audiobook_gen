@@ -6,10 +6,10 @@ logging.basicConfig(filename='app.log',
                     level=logging.INFO,
                     force=True)
 
-import pathlib
 import streamlit as st
+
 from src.parse_file import read_epub, read_txt, read_pdf, read_html
-from src.predict import epub_gen, load_models
+from src.predict import generate_audio, load_model
 from src.output import assemble_zip
 import src.config as cf
 
@@ -24,12 +24,11 @@ uploaded_file = st.file_uploader(
     label = "(1) Upload the target ebook ('epub', 'txt', 'html', 'htm', 'pdf')",
     type = ['epub', 'txt', 'html', 'htm', 'pdf'])
 
-model = load_models()
+model = load_model()
 speaker = st.selectbox('(2) Please select voice:', cf.SPEAKER_LIST)
 
 if st.button('(3) Click to run!'):
     file_extension = uploaded_file.type
-    st.success(file_extension)
     if file_extension == 'application/epub+zip':
         ebook, title = read_epub(uploaded_file)
     elif file_extension == 'text/plain':
@@ -42,11 +41,11 @@ if st.button('(3) Click to run!'):
         ebook, title = read_html(ebook_upload)
     else:
         st.warning('Invalid file type', icon="⚠️")
-    st.success('Parsing complete!')
+    st.success('Reading file complete!')
 
     with st.spinner('Generating audio...'):
-        epub_gen(ebook, title, model, speaker)
-    st.success('TTS generation complete!')
+        generate_audio(ebook, title, model, speaker)
+    st.success('Audio generation complete!')
 
     with st.spinner('Building zip file...'):
         zip_file = assemble_zip(title)

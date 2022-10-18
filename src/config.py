@@ -1,3 +1,4 @@
+DEVICE = 'cpu'
 LANGUAGE = 'en'
 MAX_CHAR_LEN = 140
 MODEL_ID = 'v3_en'
