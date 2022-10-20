@@ -1,6 +1,7 @@
 silero
 streamlit
 ebooklib
+pdfminer
 bs4
 nltk
 stqdm
