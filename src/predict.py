@@ -1,20 +1,38 @@
 import logging
+<<<<<<< HEAD
 import torch
 from stqdm import stqdm
 from . import config as cf
 from src.output import write_audio
 
 def load_models():
+=======
+
+import torch
+from stqdm import stqdm
+
+from . import config as cf
+from src.output import write_audio
+
+def load_model():
+>>>>>>> cfa3e03259ad6f55aca4da64cff1dcc15cb2fa38
     from silero import silero_tts
 
     model, _ = silero_tts(language=cf.LANGUAGE,
                                 speaker=cf.MODEL_ID)
 
+<<<<<<< HEAD
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     model.to(device)  # gpu or cpu
     return model
 
 def epub_gen(ebook, title, model, speaker):
+=======
+    model.to(cf.DEVICE)
+    return model
+
+def generate_audio(ebook, title, model, speaker):
+>>>>>>> cfa3e03259ad6f55aca4da64cff1dcc15cb2fa38
     for chapter in stqdm(ebook, desc="Chapters in ebook:"):
         chapter_index = f'chapter{ebook.index(chapter):03}'
         audio_list, sample_list = predict(chapter, chapter_index, title, model, speaker)

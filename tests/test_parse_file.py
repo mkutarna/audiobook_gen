@@ -2,7 +2,11 @@ import pytest
 import pathlib
 import numpy as np
 
+<<<<<<< HEAD
 import src.parse_file as pa
+=======
+import src.read as pa
+>>>>>>> cfa3e03259ad6f55aca4da64cff1dcc15cb2fa38
 
 def test_read_txt():
     """

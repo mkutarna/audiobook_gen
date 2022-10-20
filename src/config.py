@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+DEVICE = 'cpu'
+>>>>>>> cfa3e03259ad6f55aca4da64cff1dcc15cb2fa38
 LANGUAGE = 'en'
 MAX_CHAR_LEN = 140
 MODEL_ID = 'v3_en'
