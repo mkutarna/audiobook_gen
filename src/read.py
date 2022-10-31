@@ -16,7 +16,9 @@ def preprocess(file):
     text_list = []
     for paragraph in input_text.split('\n'):
         paragraph = paragraph.replace('—', '-')
+        paragraph = paragraph.replace('.', '. ')
         paragraph = re.sub(r'[^\x00-\x7f]', "", paragraph)
+        paragraph = re.sub(r'x0f', " ", paragraph)
         sentences = tokenize.sent_tokenize(paragraph)
         
         sentence_list = []
@@ -26,17 +28,21 @@ def preprocess(file):
             
         trunc_sentences = [phrase for sublist in sentence_list for phrase in sublist]
         text_list.append(trunc_sentences)
-    text_list = [[text for sentences in text_list for text in sentences]]
+    text_list = [text for sentences in text_list for text in sentences]
 
     return text_list
 
 def read_pdf(file):
-    from pdfminer.high_level import extract_text
+    from PyPDF2 import PdfReader
 
-    text = extract_text(file)
-    text_list = preprocess(text)
+    reader = PdfReader(file)
 
-    return text_list
+    corpus = []
+    for item in stqdm(list(reader.pages), desc="Pages in pdf:"):
+        text_list = preprocess(item.extract_text())
+        corpus.append(text_list)
+
+    return corpus
 
 def read_html(file):
     text_list = preprocess(file)

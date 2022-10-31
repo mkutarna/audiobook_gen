@@ -7,6 +7,7 @@ logging.basicConfig(filename='app.log',
                     force=True)
 
 import streamlit as st
+import numpy as np
 
 from src.read import read_epub, read_pdf, read_html, preprocess
 from src.predict import generate_audio, load_model
@@ -40,7 +41,7 @@ st.header('(3) Run the app to generate audio')
 if st.button('Click to run!'):
     file_ext = uploaded_file.type
     file_title = uploaded_file.name
-    st.succuess(file_title)
+    st.success(file_title)
     if file_ext == 'application/epub+zip':
         text, file_title = read_epub(uploaded_file)
     elif file_ext == 'text/plain':
@@ -54,9 +55,10 @@ if st.button('Click to run!'):
     else:
         st.warning('Invalid file type', icon="⚠️")
     st.success('Reading file complete!')
+    # st.text(text)
 
     with st.spinner('Generating audio...'):
-        generate_audio(text, file_title, model, speaker)
+        generate_audio(text, file_title, model, cf.SPEAKER_LIST.get(speaker))
     st.success('Audio generation complete!')
 
     with st.spinner('Building zip file...'):

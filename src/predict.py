@@ -16,14 +16,14 @@ def load_model():
     return model
 
 def generate_audio(ebook, title, model, speaker):
-    for chapter in stqdm(ebook, desc="Chapters in ebook:"):
+    for chapter in stqdm(ebook, desc="Sections in document:"):
         chapter_index = f'chapter{ebook.index(chapter):03}'
         audio_list, sample_list = predict(chapter, chapter_index, title, model, speaker)
         write_audio(audio_list, sample_list)
 
 def predict(text_section, chapter_index, title, model, speaker):
     audio_list = []
-    for sentence in stqdm(text_section, desc="Sentences in chapter:"):
+    for sentence in stqdm(text_section, desc="Sentences in section:"):
         audio = model.apply_tts(text=sentence,
                                 speaker=speaker,
                                 sample_rate=cf.SAMPLE_RATE)
