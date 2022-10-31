@@ -16,13 +16,15 @@ def preprocess(file):
     text_list = []
     for paragraph in input_text.split('\n'):
         paragraph = paragraph.replace('—', '-')
-        paragraph = paragraph.replace('.', '. ')
+        paragraph = paragraph.replace(' .', '')
         paragraph = re.sub(r'[^\x00-\x7f]', "", paragraph)
         paragraph = re.sub(r'x0f', " ", paragraph)
         sentences = tokenize.sent_tokenize(paragraph)
         
         sentence_list = []
         for sentence in sentences:
+            if not re.search('[a-zA-Z]', sentence):
+                sentence = ''
             wrapped_sentences = wrapper.wrap(sentence)
             sentence_list.append(wrapped_sentences)
             
