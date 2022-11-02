@@ -9,7 +9,7 @@ logging.basicConfig(filename='app.log',
 import streamlit as st
 import numpy as np
 
-from src.read import read_epub, read_pdf, read_html, preprocess
+from file_readers import read_epub, read_pdf, read_html, preprocess
 from src.predict import generate_audio, load_model
 from src.output import assemble_zip
 import src.config as cf
@@ -21,23 +21,23 @@ readme_text = text_file.read()
 text_file.close()
 st.markdown(readme_text)
 
-st.header('(1) Upload your document')
+st.header('1. Upload your document')
 uploaded_file = st.file_uploader(
     label = "File types accepted: epub, txt, html, pdf)",
     type = ['epub', 'txt', 'html', 'htm', 'pdf'])
 
 model = load_model()
 
-st.header('(2) Please select voice')
+st.header('2. Please select voice')
 speaker = st.radio('Available voices:', cf.SPEAKER_LIST.keys(), horizontal=True)
 
-audio_path = f'audio/speaker_{cf.SPEAKER_LIST.get(speaker)}.wav'
+audio_path = f'resources/speaker_{cf.SPEAKER_LIST.get(speaker)}.wav'
 audio_file = open(audio_path, 'rb')
 audio_bytes = audio_file.read()
 
 st.audio(audio_bytes, format='audio/ogg')
 
-st.header('(3) Run the app to generate audio')
+st.header('3. Run the app to generate audio')
 if st.button('Click to run!'):
     file_ext = uploaded_file.type
     file_title = uploaded_file.name
@@ -55,7 +55,6 @@ if st.button('Click to run!'):
     else:
         st.warning('Invalid file type', icon="⚠️")
     st.success('Reading file complete!')
-    # st.text(text)
 
     with st.spinner('Generating audio...'):
         generate_audio(text, file_title, model, cf.SPEAKER_LIST.get(speaker))

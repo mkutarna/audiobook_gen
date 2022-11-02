@@ -1,6 +1,6 @@
 Testing Text File 
 
-With generated Random Lorem Ipsum and other unexpected characters!
+With generated random Lorem Ipsum and other unexpected characters!
 
 <a href="https://github.com/mkutarna/audiobook_gen/">Link to generator repo!</a>
 
@@ -14,6 +14,6 @@ Here are some Chinese characters: 此行是对非英语字符的测试.
 
 There are 24 letters in the Greek alphabet. The vowels: are α, ε, η, ι, ο, ω, υ. All the rest are consonants.
 
-We can also test from mathematical symbols: ∫, ∇, ∞, δ, ε, X̄, %, √ ,a, ±, ÷, +, = ,-.
+We can also test for mathematical symbols: ∫, ∇, ∞, δ, ε, X̄, %, √ ,a, ±, ÷, +, = ,-.
 
 Finally, here are some emoticons: ☺️🙂😊😀😁☹️🙁😞😟😣😖😨😧😦😱😫😩.

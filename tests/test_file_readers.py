@@ -1,8 +1,7 @@
 import pytest
-import pathlib
 import numpy as np
 
-import src.read as rd
+import file_readers as rd
 
 def test_preprocess():
     """
@@ -19,7 +18,7 @@ def test_preprocess():
     assert corpus[2] == 'Link to generator repo!'
     assert corpus[20] == 'Here are some Chinese characters: .'
     assert corpus[22] == 'The vowels: are , , , , , , .'
-    assert corpus[24] == 'We can also test from mathematical symbols: , , , , , X, %,  ,a, , , +, = ,-.'
+    assert corpus[24] == 'We can also test for mathematical symbols: , , , , , X, %,  ,a, , , +, = ,-.'
     assert corpus[25] == 'Finally, here are some emoticons: .'
 
 def test_read_epub():
