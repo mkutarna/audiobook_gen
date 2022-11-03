@@ -21,6 +21,15 @@ def test_preprocess():
     assert corpus[24] == 'We can also test for mathematical symbols: , , , , , X, %,  ,a, , , +, = ,-.'
     assert corpus[25] == 'Finally, here are some emoticons: .'
 
+def test_read_pdf():
+    pdf_path = "tests/data/test.pdf"
+    corpus = rd.read_pdf(pdf_path)
+
+    assert np.shape(corpus) == (4, )
+    assert np.shape(corpus[0]) == (3, )
+    assert corpus[0][0] == 'Lorem Ipsum'
+    assert corpus[2][0] == 'Preface'
+
 def test_read_epub():
     """
     Tests read_epub function by asserting title, 
