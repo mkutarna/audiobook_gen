@@ -9,7 +9,7 @@ logging.basicConfig(filename='app.log',
 import streamlit as st
 import numpy as np
 
-from file_readers import read_epub, read_pdf, read_html, preprocess
+from src.file_readers import read_epub, read_pdf, read_html, preprocess
 from src.predict import generate_audio, load_model
 from src.output import assemble_zip
 import src.config as cf

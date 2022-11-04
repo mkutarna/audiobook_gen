@@ -13,20 +13,21 @@ def test_load_model():
     assert model.speakers[0] == 'en_0'
     assert np.shape(model.speakers) == (119,)
 
-def test_predict():
-    import torch
 
-    seed = 1337
-    torch.manual_seed(seed)
-    torch.cuda.manual_seed(seed)
+# def test_predict():
+#     import torch
 
-    text_section = ['Audiobook Gen is a tool that allows the users to generate an audio file of text', 'read in the voice of the users choice']
-    section_index = 'part000'
-    title = 'audio_test'
-    model = pr.load_model()
-    speaker = 'en_0'
-    audio_list, sample_path = pr.predict(text_section, section_index, title, model, speaker)
-    audio_test = torch.load('tests/data/test_audio.pt')
+#     seed = 1337
+#     torch.manual_seed(seed)
+#     torch.cuda.manual_seed(seed)
 
-    assert sample_path == 'outputs/audio_test_part000.wav'
-    torch.testing.assert_close(audio_list, audio_test)
+#     text_section = ['Audiobook Gen is a tool that allows the users to generate an audio file of text', 'read in the voice of the users choice']
+#     section_index = 'part000'
+#     title = 'audio_test'
+#     model = pr.load_model()
+#     speaker = 'en_0'
+#     audio_list, sample_path = pr.predict(text_section, section_index, title, model, speaker)
+#     audio_test = torch.load('tests/data/test_audio.pt')
+
+#     assert sample_path == 'outputs/audio_test_part000.wav'
+#     torch.testing.assert_close(audio_list, audio_test)
