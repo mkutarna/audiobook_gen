@@ -1,3 +1,7 @@
+from pathlib import Path
+
+INSTRUCTIONS = Path("resources/instructions.md")
+
 DEVICE = 'cpu'
 LANGUAGE = 'en'
 MAX_CHAR_LEN = 140

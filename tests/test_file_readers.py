@@ -3,9 +3,10 @@ import numpy as np
 
 import file_readers as rd
 
+
 def test_preprocess():
     """
-    Tests preprocess function by asserting title, 
+    Tests preprocess function by asserting title,
     shape of corpus, and correct line reading.
     """
     txt_path = "tests/data/test.txt"
@@ -21,6 +22,7 @@ def test_preprocess():
     assert corpus[24] == 'We can also test for mathematical symbols: , , , , , X, %,  ,a, , , +, = ,-.'
     assert corpus[25] == 'Finally, here are some emoticons: .'
 
+
 def test_read_pdf():
     pdf_path = "tests/data/test.pdf"
     corpus = rd.read_pdf(pdf_path)
@@ -30,9 +32,10 @@ def test_read_pdf():
     assert corpus[0][0] == 'Lorem Ipsum'
     assert corpus[2][0] == 'Preface'
 
+
 def test_read_epub():
     """
-    Tests read_epub function by asserting title, 
+    Tests read_epub function by asserting title,
     shape of corpus,  and correct line reading.
     """
     ebook_path = "tests/data/test.epub"

@@ -10,6 +10,7 @@ import src.config as cf
 download('punkt', quiet=True)
 wrapper = TextWrapper(cf.MAX_CHAR_LEN, fix_sentence_endings=True)
 
+
 def preprocess(file):
     input_text = BeautifulSoup(file, "html.parser").text
     text_list = []
@@ -19,18 +20,18 @@ def preprocess(file):
         paragraph = re.sub(r'[^\x00-\x7f]', "", paragraph)
         paragraph = re.sub(r'x0f', " ", paragraph)
         sentences = tokenize.sent_tokenize(paragraph)
-        
+
         sentence_list = []
         for sentence in sentences:
             if not re.search('[a-zA-Z]', sentence):
                 sentence = ''
             wrapped_sentences = wrapper.wrap(sentence)
-            sentence_list.append(wrapped_sentences)  
+            sentence_list.append(wrapped_sentences)
         trunc_sentences = [phrase for sublist in sentence_list for phrase in sublist]
         text_list.append(trunc_sentences)
     text_list = [text for sentences in text_list for text in sentences]
-
     return text_list
+
 
 def read_pdf(file):
     from PyPDF2 import PdfReader
@@ -42,9 +43,11 @@ def read_pdf(file):
         corpus.append(text_list)
     return corpus
 
+
 def read_html(file):
     text_list = preprocess(file)
     return text_list
+
 
 def read_epub(file):
     import ebooklib

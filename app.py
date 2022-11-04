@@ -1,30 +1,29 @@
 import logging
 
-logging.basicConfig(filename='app.log',
-                    filemode='w',
-                    format='%(name)s - %(levelname)s - %(message)s',
-                    level=logging.INFO,
-                    force=True)
-
 import streamlit as st
-import numpy as np
 
 from src.file_readers import read_epub, read_pdf, read_html, preprocess
 from src.predict import generate_audio, load_model
 from src.output import assemble_zip
 import src.config as cf
 
+logging.basicConfig(filename='app.log',
+                    filemode='w',
+                    format='%(name)s - %(levelname)s - %(message)s',
+                    level=logging.INFO,
+                    force=True)
+
 st.title('Audiobook Generation Tool')
 
-text_file = open("resources/instructions.md", "r")
+text_file = open(cf.INSTRUCTIONS, "r")
 readme_text = text_file.read()
 text_file.close()
 st.markdown(readme_text)
 
 st.header('1. Upload your document')
 uploaded_file = st.file_uploader(
-    label = "File types accepted: epub, txt, html, pdf)",
-    type = ['epub', 'txt', 'html', 'htm', 'pdf'])
+    label="File types accepted: epub, txt, html, pdf)",
+    type=['epub', 'txt', 'html', 'htm', 'pdf'])
 
 model = load_model()
 
