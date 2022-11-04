@@ -16,7 +16,7 @@ import src.config as cf
 
 st.title('Audiobook Generation Tool')
 
-text_file = open("instructions.md", "r")
+text_file = open("resources/instructions.md", "r")
 readme_text = text_file.read()
 text_file.close()
 st.markdown(readme_text)
