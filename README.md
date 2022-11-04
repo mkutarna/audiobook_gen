@@ -7,8 +7,7 @@ Audiobook Gen is a tool that allows the users to generate an audio file of text 
 ## Demo
 A demonstration of this tool is hosted at HuggingFace Spaces - see [Audiobook_Gen](https://huggingface.co/spaces/mkutarna/audiobook_gen)
 
-[Demo Screenshot](See [LICENSE](https://github.com/mkutarna/audiobook_gen/blob/master/resources/audiobook_gen.png)
- "Screenshot")
+[Demo Screenshot](https://github.com/mkutarna/audiobook_gen/blob/master/resources/audiobook_gen.png "Screenshot")
 
 ## Dependencies
 - silero
