@@ -2,6 +2,22 @@ import logging
 
 
 def write_audio(audio_list, sample_path):
+    """
+    Invokes torchaudio to save generated audio tensors to a file.
+
+    Parameters
+    ----------
+    audio_list : torch.tensor
+        pytorch tensor containing generated audio
+    
+    sample_path : str
+        file name and path for outputting tensor to audio file
+
+    Returns
+    -------
+    None
+
+    """
     import torch
     import torchaudio
     from src import config as cf
@@ -15,6 +31,21 @@ def write_audio(audio_list, sample_path):
 
 
 def assemble_zip(title):
+    """
+    Creates a zip file and inserts all .wav files in the output directory,
+    and returns the name / path of the zip file.
+
+    Parameters
+    ----------
+    title : str
+        title of document, used to name zip directory
+
+    Returns
+    -------
+    zip_name : str
+        name and path of zip directory generated
+
+    """
     import pathlib
     import zipfile
     from stqdm import stqdm

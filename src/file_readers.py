@@ -12,6 +12,25 @@ wrapper = TextWrapper(cf.MAX_CHAR_LEN, fix_sentence_endings=True)
 
 
 def preprocess(file):
+    """
+    Preprocesses and tokenizes a section of text from the corpus:
+    1. Removes residual HTML tags
+    2. Handles un-supported characters
+    3. Tokenizes text and confirms max token size
+
+    Parameters
+    ----------
+    file : file_like
+        list of strings,
+        section of corpus to be pre-processed and tokenized
+
+    Returns
+    -------
+    text_list :  : array_like
+        list of strings,
+        body of tokenized text from which audio is generated
+
+    """
     input_text = BeautifulSoup(file, "html.parser").text
     text_list = []
     for paragraph in input_text.split('\n'):
@@ -34,6 +53,22 @@ def preprocess(file):
 
 
 def read_pdf(file):
+    """
+    Invokes PyPDF2 PdfReader to extract main body text from PDF file_like input,
+    and preprocesses text section by section.
+
+    Parameters
+    ----------
+    file : file_like
+        PDF file input to be parsed and preprocessed
+
+    Returns
+    -------
+    corpus : array_like
+        list of list of strings,
+        body of tokenized text from which audio is generated
+
+    """
     from PyPDF2 import PdfReader
 
     reader = PdfReader(file)
@@ -45,11 +80,46 @@ def read_pdf(file):
 
 
 def read_html(file):
-    text_list = preprocess(file)
-    return text_list
+    """
+    Invokes BeautifulSoup to extract main body text from HTML file_like input,
+    and preprocesses text section by section.
+
+    Parameters
+    ----------
+    file : file_like
+        HTML file input to be parsed and preprocessed
+
+    Returns
+    -------
+    corpus : array_like
+        list of list of strings,
+        body of tokenized text from which audio is generated
+
+    """
+    corpus = preprocess(file)
+    return corpus
 
 
 def read_epub(file):
+    """
+    Invokes ebooklib read_epub to extract main body text from epub file_like input,
+    and preprocesses text section by section.
+
+    Parameters
+    ----------
+    file : file_like
+        EPUB file input to be parsed and preprocessed
+
+    Returns
+    -------
+    corpus : array_like
+        list of list of strings,
+        body of tokenized text from which audio is generated
+
+    file_title : str
+        title of document, used to name output files
+
+    """
     import ebooklib
     from ebooklib import epub
 
