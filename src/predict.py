@@ -1,3 +1,12 @@
+"""
+Notes
+-----
+This module contains the functions for audiobook_gen that handle text-to-speech generation. The functions take in the preprocessed text
+and invoke the Silero package to generate audio tensors.
+"""
+
+__all__ = ['load_model', 'generate_audio', 'predict']
+
 import logging
 
 import torch

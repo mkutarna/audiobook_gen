@@ -1,3 +1,12 @@
+"""
+Notes
+-----
+This module contains the functions for audiobook_gen that read in the file formats that require for parsing than plain text (pdf, html, epub),
+as well as the preprocessing function for all input files.
+"""
+
+__all__ = ['preprocess', 'read_pdf', 'read_html', 'read_epub']
+
 import re
 
 from bs4 import BeautifulSoup

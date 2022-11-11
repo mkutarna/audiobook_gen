@@ -1,3 +1,12 @@
+"""
+Notes
+-----
+This module contains the functions for audiobook_gen that take the generated audio tensors and output to audio files,
+as well as assembling the final zip archive for user download.
+"""
+
+__all__ = ['write_audio', 'assemble_zip']
+
 import logging
 
 

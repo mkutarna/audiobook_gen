@@ -1,3 +1,9 @@
+"""
+Notes
+-----
+This module contains the configuration entries for audiobook_gen.
+"""
+
 from pathlib import Path
 
 INSTRUCTIONS = Path("resources/instructions.md")
