@@ -5,17 +5,15 @@ from pathlib import Path
 import src.output as op
 
 
-# def test_write_audio(audio_list, sample_path):
-#     """
-#     Tests write_audio function, takes in an audio tensor with a file path and writes the audio to a file.
-#     """
-#     # Load audio_list tensor from file
+def test_write_audio(audio_list, sample_path):
+    """
+    Tests write_audio function, takes in an audio tensor with a file path and writes the audio to a file.
+    """
+    # Load audio_list tensor from file
 
-#     op.write_audio(audio_list, sample_path)
+    op.write_audio(audio_list, sample_path)
 
-#     assert ...
-#     assert ...
-#     assert ...
+    assert True == True
 
 
 def test_assemble_zip():
@@ -25,7 +23,7 @@ def test_assemble_zip():
     """
     from shutil import copy2
 
-    title_path = "test_title"
+    title_path = "speaker_samples"
     direct_res = Path("resources/")
     direct_out = Path("outputs/")
     for file_path in direct_res.iterdir():
@@ -34,6 +32,8 @@ def test_assemble_zip():
 
     _ = op.assemble_zip(title_path)
 
-    assert Path("outputs/test_title.zip").is_file() == True
+    assert Path("outputs/speaker_samples.zip").is_file() == True
     assert Path("outputs/speaker_en_0.wav").is_file() == False
     assert Path("outputs/speaker_en_110.wav").is_file() == False
+
+    Path("outputs/speaker_samples.zip").unlink()

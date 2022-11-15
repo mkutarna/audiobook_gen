@@ -62,7 +62,7 @@ def assemble_zip(title):
     directory = pathlib.Path("outputs/")
     zip_name = f"outputs/{title}.zip"
 
-    with zipfile.ZipFile(zip_name, mode="w") as archive:
+    with zipfile.ZipFile(zip_name, mode="x") as archive:
         for file_path in stqdm(directory.iterdir()):
             if pathlib.Path(file_path).suffix == '.wav':
                 archive.write(file_path, arcname=file_path.name)
