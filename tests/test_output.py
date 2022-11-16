@@ -1,5 +1,4 @@
 import pytest
-import numpy as np
 from pathlib import Path
 
 import src.output as op
@@ -13,7 +12,7 @@ def test_write_audio():
 
     # op.write_audio(audio_list, sample_path)
 
-    assert True == True
+    assert True is True
 
 
 def test_assemble_zip():
@@ -27,13 +26,13 @@ def test_assemble_zip():
     direct_res = Path("resources/")
     direct_out = Path("outputs/")
     for file_path in direct_res.iterdir():
-            if Path(file_path).suffix == '.wav':
-                copy2(file_path, direct_out)
+        if Path(file_path).suffix == '.wav':
+            copy2(file_path, direct_out)
 
     _ = op.assemble_zip(title_path)
 
-    assert Path("outputs/speaker_samples.zip").is_file() == True
-    assert Path("outputs/speaker_en_0.wav").is_file() == False
-    assert Path("outputs/speaker_en_110.wav").is_file() == False
+    assert Path("outputs/speaker_samples.zip").is_file() is True
+    assert Path("outputs/speaker_en_0.wav").is_file() is False
+    assert Path("outputs/speaker_en_110.wav").is_file() is False
 
     Path("outputs/speaker_samples.zip").unlink()

@@ -1,8 +1,8 @@
 """
 Notes
 -----
-This module contains the functions for audiobook_gen that handle text-to-speech generation. The functions take in the preprocessed text
-and invoke the Silero package to generate audio tensors.
+This module contains the functions for audiobook_gen that handle text-to-speech generation.
+The functions take in the preprocessed text and invoke the Silero package to generate audio tensors.
 """
 
 __all__ = ['load_model', 'generate_audio', 'predict']
@@ -79,16 +79,16 @@ def predict(text_section, section_index, title, model, speaker):
     text_section : array_like
         list of strings,
         body of tokenized text from which audio is generated
-    
+
     section_index : int
         index of current section within corpus
-    
+
     title : str
         title of document, used to name output files
 
     model : torch.package
         torch package containing model for language and speaker specified
-    
+
     speaker : str
         identifier of selected speaker for audio generation
 
@@ -96,7 +96,7 @@ def predict(text_section, section_index, title, model, speaker):
     -------
     audio_list : torch.tensor
         pytorch tensor containing generated audio
-    
+
     sample_path : str
         file name and path for outputting tensor to audio file
 

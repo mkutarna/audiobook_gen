@@ -19,11 +19,11 @@ def test_generate_audio():
     """
     Tests load_model function, which loads the silero TTS model.
     """
-    assert True == True
+    assert True is True
 
 
 def test_predict():
     """
     Tests load_model function, which loads the silero TTS model.
     """
-    assert True == True
+    assert True is True

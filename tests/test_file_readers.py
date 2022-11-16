@@ -37,7 +37,7 @@ def test_read_html():
     """
     Tests load_model function, which loads the silero TTS model.
     """
-    assert True == True
+    assert True is True
 
 
 def test_read_epub():

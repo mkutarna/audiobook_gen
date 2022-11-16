@@ -18,7 +18,7 @@ def write_audio(audio_list, sample_path):
     ----------
     audio_list : torch.tensor
         pytorch tensor containing generated audio
-    
+
     sample_path : str
         file name and path for outputting tensor to audio file
 
