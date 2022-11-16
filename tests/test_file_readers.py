@@ -11,7 +11,7 @@ def test_preprocess():
     """
     txt_path = "tests/data/test.txt"
     file = open(txt_path)
-    corpus = rd.preprocess(file)
+    corpus = np.array(rd.preprocess(file), dtype=object)
     file.close()
 
     assert np.shape(corpus) == (26,)
@@ -25,12 +25,19 @@ def test_preprocess():
 
 def test_read_pdf():
     pdf_path = "tests/data/test.pdf"
-    corpus = rd.read_pdf(pdf_path)
+    corpus = np.array(rd.read_pdf(pdf_path), dtype=object)
 
     assert np.shape(corpus) == (4, )
     assert np.shape(corpus[0]) == (3, )
     assert corpus[0][0] == 'Lorem Ipsum'
     assert corpus[2][0] == 'Preface'
+
+
+def test_read_html():
+    """
+    Tests load_model function, which loads the silero TTS model.
+    """
+    assert True == True
 
 
 def test_read_epub():
@@ -40,7 +47,6 @@ def test_read_epub():
     """
     ebook_path = "tests/data/test.epub"
     corpus, title = rd.read_epub(ebook_path)
-
     corpus_arr = np.array(corpus, dtype=object)
 
     assert title == "the_picture_of_dorian_gray"

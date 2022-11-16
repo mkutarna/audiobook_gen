@@ -5,7 +5,7 @@ from pathlib import Path
 import src.output as op
 
 
-def test_write_audio(audio_list, sample_path):
+def test_write_audio():
     """
     Tests write_audio function, takes in an audio tensor with a file path and writes the audio to a file.
     """
