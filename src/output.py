@@ -55,18 +55,18 @@ def assemble_zip(title):
         name and path of zip directory generated
 
     """
-    import pathlib
+    from pathlib import Path
     import zipfile
     from stqdm import stqdm
 
-    directory = pathlib.Path("outputs/")
-    zip_name = f"outputs/{title}.zip"
+    directory = Path("outputs/")
+    zip_name = Path(f"outputs/{title}.zip")
 
-    with zipfile.ZipFile(zip_name, mode="x") as archive:
+    with zipfile.ZipFile(zip_name, mode="w") as archive:
         for file_path in stqdm(directory.iterdir()):
-            if pathlib.Path(file_path).suffix == '.wav':
+            if Path(file_path).suffix == '.wav':
                 archive.write(file_path, arcname=file_path.name)
-                rem_file = pathlib.Path(file_path)
+                rem_file = Path(file_path)
                 rem_file.unlink()
 
     return zip_name

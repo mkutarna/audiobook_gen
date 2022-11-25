@@ -40,7 +40,6 @@ st.header('3. Run the app to generate audio')
 if st.button('Click to run!'):
     file_ext = uploaded_file.type
     file_title = uploaded_file.name
-    st.success(file_title)
     if file_ext == 'application/epub+zip':
         text, file_title = read_epub(uploaded_file)
     elif file_ext == 'text/plain':

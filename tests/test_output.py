@@ -22,14 +22,14 @@ def test_assemble_zip():
     """
     from shutil import copy2
 
-    title_path = "speaker_samples"
+    title = "speaker_samples"
     direct_res = Path("resources/")
     direct_out = Path("outputs/")
     for file_path in direct_res.iterdir():
         if Path(file_path).suffix == '.wav':
             copy2(file_path, direct_out)
 
-    _ = op.assemble_zip(title_path)
+    _ = op.assemble_zip(title)
 
     assert Path("outputs/speaker_samples.zip").is_file() is True
     assert Path("outputs/speaker_en_0.wav").is_file() is False
