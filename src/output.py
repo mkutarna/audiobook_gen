@@ -7,6 +7,7 @@ as well as assembling the final zip archive for user download.
 
 __all__ = ['write_audio', 'assemble_zip']
 
+import os
 import logging
 
 
@@ -30,6 +31,9 @@ def write_audio(audio_list, sample_path):
     import torch
     import torchaudio
     from src import config as cf
+
+    if not os.path.exists('outputs/'):
+        os.mkdir('outputs/')
 
     if len(audio_list) > 0:
         audio_file = torch.cat(audio_list).reshape(1, -1)
@@ -58,6 +62,9 @@ def assemble_zip(title):
     from pathlib import Path
     import zipfile
     from stqdm import stqdm
+
+    if not os.path.exists('outputs/'):
+        os.mkdir('outputs/')
 
     directory = Path("outputs/")
     zip_name = Path(f"outputs/{title}.zip")

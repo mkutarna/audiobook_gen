@@ -20,7 +20,11 @@ def test_assemble_zip():
     Tests assemble_zip function, which collects all the audio files from the output directory,
     and zips them up into a zip directory.
     """
+    import os
     from shutil import copy2
+
+    if not os.path.exists('outputs/'):
+        os.mkdir('outputs/')
 
     title = "speaker_samples"
     direct_res = Path("resources/")
