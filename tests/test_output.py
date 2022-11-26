@@ -9,7 +9,7 @@ def test_write_audio():
     Tests write_audio function, takes in an audio tensor with a file path and writes the audio to a file.
     """
     import torch
-    
+
     test_path = "tests/data/test_audio.wav"
     audio_path = "tests/data/test_audio.pt"
     audio_list = torch.load(audio_path)
