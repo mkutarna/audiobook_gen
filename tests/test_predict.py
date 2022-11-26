@@ -19,7 +19,8 @@ def test_load_model():
 
 def test_generate_audio():
     """
-    Tests load_model function, which loads the silero TTS model.
+    Tests generate_audio function, which takes the TTS model and file input,
+    and uses the predict & write_audio functions to output the audio file.
     """
     ebook_path = "tests/data/test.epub"
     corpus, title = rd.read_epub(ebook_path)
@@ -38,6 +39,26 @@ def test_generate_audio():
 
 def test_predict():
     """
-    Tests load_model function, which loads the silero TTS model.
+    Tests predict function, generates audio tensors for each token in the text section,
+    and appends them together along with a generated file path for output.
     """
-    assert True is True
+    import torch
+
+    seed = 1337
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed(seed)
+    model = pr.load_model()
+
+    tensor_path = "tests/data/test_predict.pt"
+    test_tensor = torch.load(tensor_path)
+
+    ebook_path = "tests/data/test.epub"
+    corpus, title = rd.read_epub(ebook_path)
+    section_index = 'part001'
+    speaker = 'en_110'
+    
+    audio_list, _ = pr.predict(corpus[1], section_index, title, model, speaker)
+    audio_tensor = torch.cat(audio_list).reshape(1, -1)
+
+    assert torch.allclose(test_tensor, audio_tensor)
+    assert torch.equal(test_tensor, audio_tensor)

@@ -89,27 +89,6 @@ def read_pdf(file):
     return corpus
 
 
-def read_html(file):
-    """
-    Invokes BeautifulSoup to extract main body text from HTML file_like input,
-    and preprocesses text section by section.
-
-    Parameters
-    ----------
-    file : file_like
-        HTML file input to be parsed and preprocessed
-
-    Returns
-    -------
-    corpus : array_like
-        list of list of strings,
-        body of tokenized text from which audio is generated
-
-    """
-    corpus = preprocess(file)
-    return corpus
-
-
 def read_epub(file):
     """
     Invokes ebooklib read_epub to extract main body text from epub file_like input,

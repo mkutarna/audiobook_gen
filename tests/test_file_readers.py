@@ -33,13 +33,6 @@ def test_read_pdf():
     assert corpus[2][0] == 'Preface'
 
 
-def test_read_html():
-    """
-    Tests load_model function, which loads the silero TTS model.
-    """
-    assert True is True
-
-
 def test_read_epub():
     """
     Tests read_epub function by asserting title,

@@ -2,7 +2,7 @@ import logging
 
 import streamlit as st
 
-from src.file_readers import read_epub, read_pdf, read_html, preprocess
+from src.file_readers import read_epub, read_pdf, preprocess
 from src.predict import generate_audio, load_model
 from src.output import assemble_zip
 import src.config as cf
@@ -22,8 +22,8 @@ st.markdown(readme_text)
 
 st.header('1. Upload your document')
 uploaded_file = st.file_uploader(
-    label="File types accepted: epub, txt, html, pdf)",
-    type=['epub', 'txt', 'html', 'htm', 'pdf'])
+    label="File types accepted: epub, txt, pdf)",
+    type=['epub', 'txt', 'pdf'])
 
 model = load_model()
 
@@ -47,9 +47,6 @@ if st.button('Click to run!'):
         text = preprocess(file)
     elif file_ext == 'application/pdf':
         text = read_pdf(uploaded_file)
-    elif file_ext == 'text/html' or file_ext == 'text/htm':
-        ebook_upload = uploaded_file.read()
-        text = read_html(ebook_upload)
     else:
         st.warning('Invalid file type', icon="⚠️")
     st.success('Reading file complete!')
