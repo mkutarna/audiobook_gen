@@ -8,11 +8,18 @@ def test_write_audio():
     """
     Tests write_audio function, takes in an audio tensor with a file path and writes the audio to a file.
     """
-    # Load audio_list tensor from file
+    import torch
+    
+    test_path = "tests/data/test_audio.wav"
+    audio_path = "tests/data/test_audio.pt"
+    audio_list = torch.load(audio_path)
 
-    # op.write_audio(audio_list, sample_path)
+    op.write_audio(audio_list, test_path)
 
-    assert True is True
+    assert Path(test_path).is_file() is True
+    assert Path(test_path).stat().st_size == 592858
+
+    Path(test_path).unlink()
 
 
 def test_assemble_zip():
