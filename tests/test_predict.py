@@ -56,7 +56,7 @@ def test_predict():
     corpus, title = rd.read_epub(ebook_path)
     section_index = 'part001'
     speaker = 'en_110'
-    
+
     audio_list, _ = pr.predict(corpus[1], section_index, title, model, speaker)
     audio_tensor = torch.cat(audio_list).reshape(1, -1)
 
