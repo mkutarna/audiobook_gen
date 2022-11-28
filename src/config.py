@@ -6,6 +6,8 @@ This module contains the configuration entries for audiobook_gen.
 
 from pathlib import Path
 
+output_path = Path("outputs")
+resource_path = Path("resources")
 INSTRUCTIONS = Path("resources/instructions.md")
 
 DEVICE = 'cpu'

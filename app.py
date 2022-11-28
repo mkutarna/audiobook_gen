@@ -2,10 +2,7 @@ import logging
 
 import streamlit as st
 
-from src.file_readers import read_epub, read_pdf, preprocess
-from src.predict import generate_audio, load_model
-from src.output import assemble_zip
-import src.config as cf
+from src import file_readers, predict, output, config
 
 logging.basicConfig(filename='app.log',
                     filemode='w',
@@ -15,7 +12,7 @@ logging.basicConfig(filename='app.log',
 
 st.title('Audiobook Generation Tool')
 
-text_file = open(cf.INSTRUCTIONS, "r")
+text_file = open(config.INSTRUCTIONS, "r")
 readme_text = text_file.read()
 text_file.close()
 st.markdown(readme_text)
@@ -25,12 +22,12 @@ uploaded_file = st.file_uploader(
     label="File types accepted: epub, txt, pdf)",
     type=['epub', 'txt', 'pdf'])
 
-model = load_model()
+model = predict.load_model()
 
 st.header('2. Please select voice')
-speaker = st.radio('Available voices:', cf.SPEAKER_LIST.keys(), horizontal=True)
+speaker = st.radio('Available voices:', config.SPEAKER_LIST.keys(), horizontal=True)
 
-audio_path = f'resources/speaker_{cf.SPEAKER_LIST.get(speaker)}.wav'
+audio_path = f'resources/speaker_{config.SPEAKER_LIST.get(speaker)}.wav'
 audio_file = open(audio_path, 'rb')
 audio_bytes = audio_file.read()
 
@@ -41,22 +38,22 @@ if st.button('Click to run!'):
     file_ext = uploaded_file.type
     file_title = uploaded_file.name
     if file_ext == 'application/epub+zip':
-        text, file_title = read_epub(uploaded_file)
+        text, file_title = file_readers.read_epub(uploaded_file)
     elif file_ext == 'text/plain':
         file = uploaded_file.read()
-        text = preprocess(file)
+        text = file_readers.preprocess_text(file)
     elif file_ext == 'application/pdf':
-        text = read_pdf(uploaded_file)
+        text = file_readers.read_pdf(uploaded_file)
     else:
         st.warning('Invalid file type', icon="⚠️")
     st.success('Reading file complete!')
 
     with st.spinner('Generating audio...'):
-        generate_audio(text, file_title, model, cf.SPEAKER_LIST.get(speaker))
+        output.generate_audio(text, file_title, model, config.SPEAKER_LIST.get(speaker))
     st.success('Audio generation complete!')
 
     with st.spinner('Building zip file...'):
-        zip_file = assemble_zip(file_title)
+        zip_file = output.assemble_zip(file_title)
         title_name = f'{file_title}.zip'
     st.success('Zip file prepared!')
 

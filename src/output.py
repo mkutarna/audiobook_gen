@@ -4,11 +4,10 @@ Notes
 This module contains the functions for audiobook_gen that take the generated audio tensors and output to audio files,
 as well as assembling the final zip archive for user download.
 """
-
-__all__ = ['write_audio', 'assemble_zip']
-
 import os
 import logging
+
+from src import config
 
 
 def write_audio(audio_list, sample_path):
@@ -32,8 +31,8 @@ def write_audio(audio_list, sample_path):
     import torchaudio
     from src import config as cf
 
-    if not os.path.exists('outputs/'):
-        os.mkdir('outputs/')
+    if not config.output_path.exists():
+        config.output_path.mkdir()
 
     if len(audio_list) > 0:
         audio_file = torch.cat(audio_list).reshape(1, -1)

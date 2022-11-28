@@ -5,9 +5,6 @@ This module contains the functions for audiobook_gen that read in the
 file formats that require for parsing than plain text (pdf, html, epub),
 as well as the preprocessing function for all input files.
 """
-
-__all__ = ['preprocess', 'read_pdf', 'read_epub']
-
 import re
 
 from bs4 import BeautifulSoup
@@ -15,13 +12,13 @@ from nltk import tokenize, download
 from textwrap import TextWrapper
 from stqdm import stqdm
 
-import src.config as cf
+from src import config
 
 download('punkt', quiet=True)
-wrapper = TextWrapper(cf.MAX_CHAR_LEN, fix_sentence_endings=True)
+wrapper = TextWrapper(config.MAX_CHAR_LEN, fix_sentence_endings=True)
 
 
-def preprocess(file):
+def preprocess_text(file):
     """
     Preprocesses and tokenizes a section of text from the corpus:
     1. Removes residual HTML tags
@@ -84,7 +81,7 @@ def read_pdf(file):
     reader = PdfReader(file)
     corpus = []
     for item in stqdm(list(reader.pages), desc="Pages in pdf:"):
-        text_list = preprocess(item.extract_text())
+        text_list = preprocess_text(item.extract_text())
         corpus.append(text_list)
     return corpus
 
@@ -118,6 +115,6 @@ def read_epub(file):
     corpus = []
     for item in stqdm(list(book.get_items()), desc="Chapters in ebook:"):
         if item.get_type() == ebooklib.ITEM_DOCUMENT:
-            text_list = preprocess(item.get_content())
+            text_list = preprocess_text(item.get_content())
             corpus.append(text_list)
     return corpus, file_title

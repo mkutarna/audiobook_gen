@@ -1,17 +1,17 @@
 import pytest
 import numpy as np
 
-import file_readers as rd
+from src import file_readers
 
 
-def test_preprocess():
+def test_preprocess_text():
     """
     Tests preprocess function by asserting title,
     shape of corpus, and correct line reading.
     """
     txt_path = "tests/data/test.txt"
     file = open(txt_path)
-    corpus = np.array(rd.preprocess(file), dtype=object)
+    corpus = np.array(file_readers.preprocess_text(file), dtype=object)
     file.close()
 
     assert np.shape(corpus) == (26,)
@@ -25,7 +25,7 @@ def test_preprocess():
 
 def test_read_pdf():
     pdf_path = "tests/data/test.pdf"
-    corpus = np.array(rd.read_pdf(pdf_path), dtype=object)
+    corpus = np.array(file_readers.read_pdf(pdf_path), dtype=object)
 
     assert np.shape(corpus) == (4, )
     assert np.shape(corpus[0]) == (3, )
@@ -39,7 +39,7 @@ def test_read_epub():
     shape of corpus,  and correct line reading.
     """
     ebook_path = "tests/data/test.epub"
-    corpus, title = rd.read_epub(ebook_path)
+    corpus, title = file_readers.read_epub(ebook_path)
     corpus_arr = np.array(corpus, dtype=object)
 
     assert title == "the_picture_of_dorian_gray"
