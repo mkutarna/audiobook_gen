@@ -2,6 +2,7 @@ import pytest
 import numpy as np
 
 from src import file_readers
+import test_config
 
 
 def test_preprocess_text():
@@ -9,7 +10,7 @@ def test_preprocess_text():
     Tests preprocess function by asserting title,
     shape of corpus, and correct line reading.
     """
-    txt_path = "tests/data/test.txt"
+    txt_path = test_config.data_path / "test.txt"
     file = open(txt_path)
     corpus = np.array(file_readers.preprocess_text(file), dtype=object)
     file.close()
@@ -24,7 +25,7 @@ def test_preprocess_text():
 
 
 def test_read_pdf():
-    pdf_path = "tests/data/test.pdf"
+    pdf_path = test_config.data_path / "test.pdf"
     corpus = np.array(file_readers.read_pdf(pdf_path), dtype=object)
 
     assert np.shape(corpus) == (4, )
@@ -38,7 +39,7 @@ def test_read_epub():
     Tests read_epub function by asserting title,
     shape of corpus,  and correct line reading.
     """
-    ebook_path = "tests/data/test.epub"
+    ebook_path = test_config.data_path / "test.epub"
     corpus, title = file_readers.read_epub(ebook_path)
     corpus_arr = np.array(corpus, dtype=object)
 

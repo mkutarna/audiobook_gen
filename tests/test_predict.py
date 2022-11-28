@@ -1,8 +1,10 @@
 import pytest
+import torch
 import numpy as np
 from pathlib import Path
 
 from src import predict, file_readers
+import test_config
 
 
 def test_load_model():
@@ -11,7 +13,7 @@ def test_load_model():
     """
     model = predict.load_model()
 
-    assert str(type(model)) == "<class '<torch_package_0>.multi_acc_v3_package.TTSModelMultiAcc_v3'>"
+    # assert isinstance(model, torch.jit.ScriptModule)
     assert model.speakers[0] == 'en_0'
     assert np.shape(model.speakers) == (119,)
 
@@ -21,19 +23,22 @@ def test_generate_audio():
     Tests generate_audio function, which takes the TTS model and file input,
     and uses the predict & write_audio functions to output the audio file.
     """
-    ebook_path = "tests/data/test.epub"
+    ebook_path = test_config.data_path / "test.epub"
+    wav1_path = test_config.output_path / 'the_picture_of_dorian_gray_part000.wav'
+    wav2_path = test_config.output_path / 'the_picture_of_dorian_gray_part001.wav'
+    wav3_path = test_config.output_path / 'the_picture_of_dorian_gray_part002.wav'
     corpus, title = file_readers.read_epub(ebook_path)
 
     model = predict.load_model()
     speaker = 'en_110'
     predict.generate_audio(corpus[0:2], title, model, speaker)
 
-    assert Path("outputs/the_picture_of_dorian_gray_part000.wav").is_file()
-    assert Path("outputs/the_picture_of_dorian_gray_part001.wav").is_file()
-    assert not Path("outputs/the_picture_of_dorian_gray_part002.wav").is_file()
+    assert wav1_path.is_file()
+    assert wav2_path.is_file()
+    assert not wav3_path.is_file()
 
-    Path("outputs/the_picture_of_dorian_gray_part000.wav").unlink()
-    Path("outputs/the_picture_of_dorian_gray_part001.wav").unlink()
+    wav1_path.unlink()
+    wav2_path.unlink()
 
 
 def test_predict():
@@ -41,17 +46,15 @@ def test_predict():
     Tests predict function, generates audio tensors for each token in the text section,
     and appends them together along with a generated file path for output.
     """
-    import torch
-
     seed = 1337
     torch.manual_seed(seed)
     torch.cuda.manual_seed(seed)
     model = predict.load_model()
 
-    tensor_path = "tests/data/test_predict.pt"
+    tensor_path = test_config.data_path / "test_predict.pt"
     test_tensor = torch.load(tensor_path)
 
-    ebook_path = "tests/data/test.epub"
+    ebook_path = test_config.data_path / "test.epub"
     corpus, title = file_readers.read_epub(ebook_path)
     section_index = 'part001'
     speaker = 'en_110'

@@ -4,8 +4,8 @@ Notes
 This module contains the functions for audiobook_gen that take the generated audio tensors and output to audio files,
 as well as assembling the final zip archive for user download.
 """
-import os
 import logging
+from pathlib import Path
 
 from src import config
 
@@ -58,21 +58,18 @@ def assemble_zip(title):
         name and path of zip directory generated
 
     """
-    from pathlib import Path
     import zipfile
     from stqdm import stqdm
 
-    if not os.path.exists('outputs/'):
-        os.mkdir('outputs/')
+    if not config.output_path.exists():
+        config.output_path.mkdir()
 
-    directory = Path("outputs/")
-    zip_name = Path(f"outputs/{title}.zip")
+    zip_name = config.output_path / f'{title}.zip'
 
     with zipfile.ZipFile(zip_name, mode="w") as archive:
-        for file_path in stqdm(directory.iterdir()):
-            if Path(file_path).suffix == '.wav':
+        for file_path in stqdm(config.output_path.iterdir()):
+            if file_path.suffix == '.wav':
                 archive.write(file_path, arcname=file_path.name)
-                rem_file = Path(file_path)
-                rem_file.unlink()
+                file_path.unlink()
 
     return zip_name

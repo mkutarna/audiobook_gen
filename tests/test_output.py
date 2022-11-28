@@ -17,10 +17,10 @@ def test_write_audio():
 
     output.write_audio(audio_list, test_path)
 
-    assert Path(test_path).is_file()
-    assert Path(test_path).stat().st_size == 592858
+    assert test_path.is_file()
+    assert test_path.stat().st_size == 592858
 
-    Path(test_path).unlink()
+    test_path.unlink()
 
 
 def test_assemble_zip():
@@ -39,13 +39,13 @@ def test_assemble_zip():
     wav2_path = config.output_path / 'speaker_en_110.wav'
 
     for file_path in config.resource_path.iterdir():
-        if Path(file_path).suffix == '.wav':
+        if file_path.suffix == '.wav':
             copy2(file_path, config.output_path)
 
     _ = output.assemble_zip(title)
 
     assert zip_path.is_file()
-    assert wav1_path.is_file()
-    assert wav2_path.is_file()
+    assert not wav1_path.is_file()
+    assert not wav2_path.is_file()
 
     zip_path.unlink()

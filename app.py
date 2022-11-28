@@ -27,7 +27,7 @@ model = predict.load_model()
 st.header('2. Please select voice')
 speaker = st.radio('Available voices:', config.SPEAKER_LIST.keys(), horizontal=True)
 
-audio_path = f'resources/speaker_{config.SPEAKER_LIST.get(speaker)}.wav'
+audio_path = config.resource_path / f'speaker_{config.SPEAKER_LIST.get(speaker)}.wav'
 audio_file = open(audio_path, 'rb')
 audio_bytes = audio_file.read()
 
