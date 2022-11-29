@@ -1,0 +1,7 @@
+silero
+streamlit
+ebooklib
+PyPDF2
+bs4
+nltk
+stqdm

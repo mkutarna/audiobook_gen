@@ -1,0 +1,26 @@
+Testing Text File
+With generated random Lorem Ipsum and other unexpected characters!
+Link to generator repo!
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+Proin fermentum leo vel orci porta non pulvinar.
+Pretium lectus quam id leo in vitae turpis massa sed.
+Donec ac odio tempor orci dapibus.
+Feugiat in ante metus dictum at tempor.
+Elementum tempus egestas sed sed risus.
+Adipiscing commodo elit at imperdiet dui accumsan sit.
+Placerat orci nulla pellentesque dignissim enim.
+Posuere lorem ipsum dolor sit.
+Id ornare arcu odio ut sem.
+Purus faucibus ornare suspendisse sed nisi lacus sed.
+Ac turpis egestas sed tempus urna et pharetra pharetra massa.
+Morbi quis commodo odio aenean.
+Malesuada proin libero nunc consequat interdum.
+Ut placerat orci nulla pellentesque dignissim enim sit.
+Elit at imperdiet dui accumsan sit amet.
+Built to test various characters and other possible inputs to the silero model.
+Here are some Chinese characters: .
+There are 24 letters in the Greek alphabet.
+The vowels: are , , , , , , .
+All the rest are consonants.
+We can also test for mathematical symbols: , , , , , X, %,  ,a, , , +, = ,-.
+Finally, here are some emoticons: .
