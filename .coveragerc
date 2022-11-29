@@ -1,5 +1,5 @@
 
-# .coveragec for audiobook_gen
+# .coveragerc for audiobook_gen
 
 [run]
 # data_file = put a coverage file name here!!!

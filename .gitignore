@@ -8,7 +8,9 @@ token
 docs/
 conda/
 tmp/
-notesbooks/outputs/
+notebooks/outputs/
+tests/__pycache__/
+tests/.pytest_cache
 
 tags
 *~
