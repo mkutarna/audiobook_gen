@@ -17,12 +17,13 @@ You can input various text formats (`txt`, `pdf`, `epub` - more options in devel
 ## HuggingFace Space
 A demonstration of this tool is hosted at HuggingFace Spaces - see [Audiobook_Gen](https://huggingface.co/spaces/mkutarna/audiobook_gen).
 
-[<img style="border:1px solid grey" src="resources/audiobook_gen.png" alt="Screenshot"/>](https://huggingface.co/spaces/mkutarna/audiobook_gen)
+<img style="border:1px solid grey" src="resources/audiobook_gen.png" alt="Screenshot"/>
 
 # Future
 
 Here is a list features in development and planned for the future:
 - `html` file import
-- `mobi`, `azw` audiobook output
+- `mobi`, `azw` ebook input
+- optional audio output formats (for better compression)
 - improved audio file output handling
 - Docker image for local use
