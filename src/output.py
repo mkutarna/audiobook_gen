@@ -5,7 +5,6 @@ This module contains the functions for audiobook_gen that take the generated aud
 as well as assembling the final zip archive for user download.
 """
 import logging
-from pathlib import Path
 
 from src import config
 

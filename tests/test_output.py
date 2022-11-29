@@ -1,5 +1,4 @@
 import pytest
-from pathlib import Path
 
 from src import output, config
 import test_config

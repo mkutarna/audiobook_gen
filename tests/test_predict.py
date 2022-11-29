@@ -1,9 +1,8 @@
 import pytest
 import torch
 import numpy as np
-from pathlib import Path
 
-from src import predict, file_readers
+from src import predict, file_readers, config
 import test_config
 
 
@@ -13,7 +12,6 @@ def test_load_model():
     """
     model = predict.load_model()
 
-    # assert isinstance(model, torch.jit.ScriptModule)
     assert model.speakers[0] == 'en_0'
     assert np.shape(model.speakers) == (119,)
 
@@ -24,9 +22,9 @@ def test_generate_audio():
     and uses the predict & write_audio functions to output the audio file.
     """
     ebook_path = test_config.data_path / "test.epub"
-    wav1_path = test_config.output_path / 'the_picture_of_dorian_gray_part000.wav'
-    wav2_path = test_config.output_path / 'the_picture_of_dorian_gray_part001.wav'
-    wav3_path = test_config.output_path / 'the_picture_of_dorian_gray_part002.wav'
+    wav1_path = config.output_path / 'the_picture_of_dorian_gray_part000.wav'
+    wav2_path = config.output_path / 'the_picture_of_dorian_gray_part001.wav'
+    wav3_path = config.output_path / 'the_picture_of_dorian_gray_part002.wav'
     corpus, title = file_readers.read_epub(ebook_path)
 
     model = predict.load_model()

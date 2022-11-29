@@ -10,18 +10,14 @@ def test_preprocess_text():
     Tests preprocess function by asserting title,
     shape of corpus, and correct line reading.
     """
-    txt_path = test_config.data_path / "test.txt"
-    file = open(txt_path)
-    corpus = np.array(file_readers.preprocess_text(file), dtype=object)
-    file.close()
+    test_path = test_config.data_path / "test.txt"
+    processed_path = test_config.data_path / "test_processed.txt"
+    with open(test_path, 'r') as file:
+        test_corpus = file_readers.preprocess_text(file)
+    with open(processed_path, 'r') as process_file:
+        processed_corpus = [line.strip() for line in process_file.readlines()]
 
-    assert np.shape(corpus) == (26,)
-    assert corpus[0] == 'Testing Text File'
-    assert corpus[2] == 'Link to generator repo!'
-    assert corpus[20] == 'Here are some Chinese characters: .'
-    assert corpus[22] == 'The vowels: are , , , , , , .'
-    assert corpus[24] == 'We can also test for mathematical symbols: , , , , , X, %,  ,a, , , +, = ,-.'
-    assert corpus[25] == 'Finally, here are some emoticons: .'
+    assert processed_corpus == test_corpus
 
 
 def test_read_pdf():
