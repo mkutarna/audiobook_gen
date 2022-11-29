@@ -52,12 +52,14 @@ def test_predict():
     tensor_path = test_config.data_path / "test_predict.pt"
     test_tensor = torch.load(tensor_path)
 
-    ebook_path = test_config.data_path / "test.epub"
-    corpus, title = file_readers.read_epub(ebook_path)
+    text_path = test_config.data_path / "test_predict.txt"
+    with open(text_path, 'r') as file:
+        text = file_readers.preprocess_text(file)
+    title = 'test_predict'
     section_index = 'part001'
     speaker = 'en_110'
 
-    audio_list, _ = predict.predict(corpus[1], section_index, title, model, speaker)
+    audio_list, _ = predict.predict(text, section_index, title, model, speaker)
     audio_tensor = torch.cat(audio_list).reshape(1, -1)
 
-    torch.testing.assert_close(audio_tensor, test_tensor, atol=1e-3, rtol=0.2)
+    torch.testing.assert_close(audio_tensor, test_tensor, atol=1e-4, rtol=0.01)
