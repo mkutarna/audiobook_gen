@@ -1,5 +1,3 @@
 Predict Testing Text File 
 
-Audiobook Gen is a tool that allows the users to generate an audio file of text (e.g. audiobook), read in the voice of the user's choice. This tool is based on the Silero text-to-speech toolkit and uses Streamlit to deliver the application.
-
-This tool generates custom-voiced audiobook files from an imported ebook file. Please upload an ebook to begin the conversion process. Output files will be downloaded as a .zip archive.
+Audiobook Gen is a tool that allows the users to generate an audio file from an ebook or other document.
