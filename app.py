@@ -49,7 +49,7 @@ if st.button('Click to run!'):
     st.success('Reading file complete!')
 
     with st.spinner('Generating audio...'):
-        output.generate_audio(text, file_title, model, config.SPEAKER_LIST.get(speaker))
+        predict.generate_audio(text, file_title, model, config.SPEAKER_LIST.get(speaker))
     st.success('Audio generation complete!')
 
     with st.spinner('Building zip file...'):
