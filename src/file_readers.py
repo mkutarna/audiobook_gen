@@ -118,3 +118,29 @@ def read_epub(file):
             text_list = preprocess_text(item.get_content())
             corpus.append(text_list)
     return corpus, file_title
+
+
+def read_html(file):
+    """
+    Invokes BeautifulSoup4 to extract main body text from html file_like input,
+    and preprocesses text section by section.
+
+    Parameters
+    ----------
+    file : file_like
+        HTML file input to be parsed and preprocessed
+
+    Returns
+    -------
+    corpus : array_like
+        list of list of strings,
+        body of tokenized text from which audio is generated
+
+    file_title : str
+        title of document, used to name output files
+
+    """
+    file_title = file.stem
+    corpus = preprocess_text(file)
+    
+    return corpus, file_title

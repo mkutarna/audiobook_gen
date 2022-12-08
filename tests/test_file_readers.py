@@ -44,3 +44,19 @@ def test_read_epub():
     assert np.shape(corpus_arr[0]) == (39,)
     assert corpus[0][0] == 'The Project Gutenberg eBook of The Picture of Dorian Gray, by Oscar Wilde'
     assert corpus[2][0] == 'CHAPTER I.'
+
+
+def test_read_html():
+    """
+    Tests read_html function by asserting title,
+    shape of corpus,  and correct line reading.
+    """
+    html_path = test_config.data_path / "test.htm"
+    corpus, title = file_readers.read_html(html_path)
+    corpus_arr = np.array(corpus, dtype=object)
+
+    assert title == "test"
+    assert np.shape(corpus_arr) == (6,)
+    assert np.shape(corpus_arr[0]) == (39,)
+    assert corpus[0][0] == 'The Project Gutenberg eBook of The Picture of Dorian Gray, by Oscar Wilde'
+    assert corpus[2][0] == 'CHAPTER I.'
