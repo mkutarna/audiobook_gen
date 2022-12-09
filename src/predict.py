@@ -106,5 +106,5 @@ def predict(text_section, section_index, title, model, speaker):
         else:
             logging.info(f'Tensor for sentence is not valid: \n {sentence}')
 
-    sample_path = config.output_path / f'{title}_{section_index}.wav'
+    sample_path = config.output_path / f'{title}_{section_index}.mp3'
     return audio_list, sample_path

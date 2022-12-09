@@ -35,7 +35,7 @@ def write_audio(audio_list, sample_path):
 
     if len(audio_list) > 0:
         audio_file = torch.cat(audio_list).reshape(1, -1)
-        torchaudio.save(sample_path, audio_file, cf.SAMPLE_RATE)
+        torchaudio.save(sample_path, audio_file, cf.SAMPLE_RATE, format="mp3")
         logging.info(f'Audio generated at: {sample_path}')
     else:
         logging.info(f'Audio at: {sample_path} is empty.')
@@ -67,7 +67,7 @@ def assemble_zip(title):
 
     with zipfile.ZipFile(zip_name, mode="w") as archive:
         for file_path in stqdm(config.output_path.iterdir()):
-            if file_path.suffix == '.wav':
+            if file_path.suffix == '.mp3':
                 archive.write(file_path, arcname=file_path.name)
                 file_path.unlink()
 
