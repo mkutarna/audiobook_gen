@@ -49,6 +49,8 @@ def preprocess_text(file):
 
         sentence_list = []
         for sentence in sentences:
+            if any(chr.isdigit() for chr in sentence):
+                sentence = extract_replace(sentence)
             if not re.search('[a-zA-Z]', sentence):
                 sentence = ''
             wrapped_sentences = wrapper.wrap(sentence)
@@ -57,6 +59,62 @@ def preprocess_text(file):
         text_list.append(trunc_sentences)
     text_list = [text for sentences in text_list for text in sentences]
     return text_list
+
+
+def extract_replace(entry_string):
+    import inflect
+    
+    result = (entry_string + '.')[:-1]
+    p = inflect.engine()
+    i = 0 
+
+    #initialize array with three random numbers to enter the loop, then find if there are numbers or not.
+    array = [3 , 2 , 3]
+
+    #take every number from the entry string, locate and store the number in digits in a sentence (using find_num_index), apply number_to_words
+    #to that number specifically then replace it back in the sentence.
+    while(len(array) > 2):
+        #update array with first and last indexes of every number in digits in a sentence
+        array = find_num_index(result)
+        number = result[array[i] : array[i+1] + 1]
+        k = p.number_to_words(number)
+        position = array[i]
+        number_of_characters = array[i+1] - array[i] + 1
+
+        #update sentence with the new word to numbers until there are no numbers in digits left
+        result = result[:position] + k + result[position + number_of_characters:]
+
+    return result
+
+
+def find_num_index(entry_string): 
+    result0 = []
+
+    #fill result0 array with all the indexes of digit characters in a sentence
+    for i in range(len(entry_string)):
+        if (entry_string[i].isdigit() == True):
+            result0.append(i)
+
+    result1 = []
+
+    try:
+        result1.append(result0[0])
+    except IndexError:
+        result0 = 'null'
+    if(result0 != 'null'):
+
+    # append only indexes of first and last characters of numbers to result1 array 
+        for k in range(len(result0) - 1):
+            if ((result0[k+1] - result0[k]) > 2):
+                result1.append(result0[k])
+                result1.append(result0[k+1])
+        try:
+            result1.append(result0[len(result0) - 1])
+        except IndexError:
+            result1 = 'null'
+
+    # return array of even length that contains first and last index of every number in a sentence
+    return result1
 
 
 def read_pdf(file):

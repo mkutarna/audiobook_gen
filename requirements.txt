@@ -3,5 +3,6 @@ streamlit
 ebooklib
 PyPDF2
 bs4
+inflect
 nltk
 stqdm
