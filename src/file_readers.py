@@ -51,6 +51,7 @@ def preprocess_text(file):
         for sentence in sentences:
             if any(chr.isdigit() for chr in sentence):
                 sentence = extract_replace(sentence)
+            sentence = replace_symbols(sentence)
             if not re.search('[a-zA-Z]', sentence):
                 sentence = ''
             wrapped_sentences = wrapper.wrap(sentence)
@@ -115,6 +116,31 @@ def find_num_index(entry_string):
 
     # return array of even length that contains first and last index of every number in a sentence
     return result1
+
+
+def replace_symbols(text):
+    import re
+    
+    symbol_map = {
+        '+': ' plus ',
+        '-': ' minus ',
+        '—': ' dash ',
+        '=': ' equals ',
+        '≈': ' approximately equal to ',
+        '*': ' times ',
+        'x': ' times ',
+        '%': ' percent ',
+        '/': ' divided by ',
+        '#': ' number ',
+        '@': ' at ',
+        '&': ' ampersand ',
+        '°': ' degrees '
+    }
+    
+    symbol_regex = re.compile('|'.join(re.escape(key) for key in symbol_map.keys()))
+    text = symbol_regex.sub(lambda x: symbol_map[x.group()], text)
+                              
+    return text
 
 
 def read_pdf(file):
