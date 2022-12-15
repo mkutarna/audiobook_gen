@@ -189,10 +189,16 @@ def read_epub(file):
         title of document, used to name output files
 
     """
+    from pathlib import Path
+    
     import ebooklib
     from ebooklib import epub
+    from tempfile import NamedTemporaryFile
 
-    book = epub.read_epub(file)
+    with NamedTemporaryFile(dir='.', suffix='.csv') as f:
+        f.write(file.getbuffer())
+        file = Path(f.name)
+        book = epub.read_epub(file)
     file_title = book.get_metadata('DC', 'title')[0][0]
     file_title = file_title.lower().replace(' ', '_')
     corpus = []
