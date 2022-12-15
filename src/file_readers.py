@@ -128,7 +128,6 @@ def replace_symbols(text):
         '=': ' equals ',
         '≈': ' approximately equal to ',
         '*': ' times ',
-        'x': ' times ',
         '%': ' percent ',
         '/': ' divided by ',
         '#': ' number ',

@@ -41,7 +41,7 @@ if st.button('Click to run!'):
         text, file_title = file_readers.read_epub(uploaded_file)
     elif file_ext == 'text/plain':
         file = uploaded_file.read()
-        text = file_readers.preprocess_text(file)
+        text = [file_readers.preprocess_text(file)]
     elif file_ext == 'application/pdf':
         text = file_readers.read_pdf(uploaded_file)
     else:
